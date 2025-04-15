@@ -1,7 +1,8 @@
 ## Multipath Servidores Proxmox 
 
-Este documento foi elaborado para auxiliar na compreensão e documentação da funcionalidade do ambiente de virtualização Multipath. Ele serve exclusivamente como um guia para estudantes e profissionais de TI.
+Este documento foi elaborado para auxiliar na compreensão e documentação da funcionalidade do ambiente de virtualização com Multipath. Ele serve exclusivamente como um guia para estudantes e profissionais de TI.
 
+---
 ## Função principal
 
 - Mapear o caminho das Fibras ópticas
@@ -24,8 +25,9 @@ Este documento foi elaborado para auxiliar na compreensão e documentação da f
 
 - SAN Network
 
-- Dell Unity 
-
+- Dell Unity
+  
+---
 ## Procedimento para criação de Alias 
 
 ```bash
@@ -45,6 +47,7 @@ multipath -a <nº wwid>
 #estiver com a função de encontrar wwn de forma automatica
 ```
 
+---
 ## Criando alias  multipath.conf
 
 ```bash
@@ -61,6 +64,7 @@ multipaths {
 multipath -r 
 ```
 
+---
 ## Princais configurações do multipath.conf 
 
 - **defaults**
@@ -125,6 +129,7 @@ multipath -r
     - **Valor**: Unity_VMDATA01
     - **Significado**: O dispositivo multipath será referenciado pelo nome Unity_VMDATA01.
 
+---
 ## Remoção de blocos do multipath
 
 Essa configuração é necessária para garantir que, caso uma LUN seja removida do mapeamento do servidor, o impacto no funcionamento do cluster Proxmox seja minimizado. Se a LUN não for removida corretamente, isso pode afetar negativamente o desempenho e a estabilidade do cluster Proxmox como um todo.
@@ -155,6 +160,7 @@ echo '1' > /sys/block/sdcl/device/delete
 systemctl restart multipathd
 ```
 
+---
 ## Reeleitura de fibra 
 
 Essa configuração é necessária quando uma nova LUN é apresentada aos servidores. Ela garante que a re-leitura da fibra permita que os servidores reconheçam os novos mapeamentos.
@@ -171,6 +177,7 @@ cat /sys/class/fc_host/host15/port_state
 cat /sys/class/fc_host/host16/port_state
 ```
 
+---
 ## Máquinas do cluster Proxmox 
 
 - **SRVPMXPRD11**
@@ -188,5 +195,9 @@ cat /sys/class/fc_host/host16/port_state
 - **SRVPMXPRD15**
   - **IP**: 10.57.1.103
 
+---
+## Diagrama Multipath
+
+![Image](https://github.com/user-attachments/assets/aa8a1f01-0c43-4751-8dfa-27d160348560)
 
 
